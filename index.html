@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Merchant SOFORT-FIX | Shopify Integration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .top-banner {
+            background: linear-gradient(90deg, #ff4444, #cc0000);
+            text-align: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        nav {
+            background: rgba(255,255,255,0.05);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #4285F4;
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, #00c851, #007E33);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #4285F4;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight { color: #FBBC04; }
+        .highlight-green { color: #34A853; }
+
+        .hero-sub {
+            font-size: 20px;
+            color: #aaaaaa;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: #4285F4;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #00c851, #007E33);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+            box-shadow: 0 10px 40px rgba(0,200,81,0.4);
+        }
+
+        .cta-sub {
+            font-size: 13px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        .section {
+            padding: 80px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: #888;
+            font-size: 17px;
+            margin-bottom: 50px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: rgba(234,67,53,0.1);
+            border: 1px solid rgba(234,67,53,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .problem-icon { font-size: 28px; }
+
+        .problem-text h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 5px;
+        }
+
+        .problem-text p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .solution-bg {
+            background: rgba(52,168,83,0.03);
+            padding: 80px 20px;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .solution-card {
+            background: rgba(52,168,83,0.1);
+            border: 1px solid rgba(52,168,83,0.3);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .solution-card .icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .solution-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #34A853;
+            margin-bottom: 10px;
+        }
+
+        .solution-card p {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .module-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .module-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .module-number {
+            background: linear-gradient(135deg, #4285F4, #1a73e8);
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .module-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .module-content p {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .pricing-card.featured {
+            background: rgba(66,133,244,0.15);
+            border-color: #4285F4;
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FBBC04, #ff9800);
+            color: #000;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .pricing-name {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .pricing-price {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            text-align: left;
+            margin: 25px 0;
+        }
+
+        .pricing-features li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #bbb;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            gap: 10px;
+        }
+
+        .check { color: #34A853; }
+
+        .btn-pricing {
+            display: block;
+            padding: 16px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 16px;
+            margin-top: 25px;
+        }
+
+        .btn-default {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .btn-featured {
+            background: linear-gradient(135deg, #00c851, #007E33);
+            color: white;
+        }
+
+        .guarantee-box {
+            background: rgba(251,188,4,0.1);
+            border: 2px solid rgba(251,188,4,0.3);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .guarantee-icon { font-size: 80px; }
+
+        .guarantee-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #FBBC04;
+            margin-bottom: 10px;
+        }
+
+        .guarantee-text {
+            font-size: 15px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .stars { color: #FBBC04; font-size: 18px; margin-bottom: 12px; }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: #ccc;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            display: inline-flex;
+            margin-right: 12px;
+        }
+
+        .author-name { font-weight: 700; font-size: 15px; }
+        .author-role { font-size: 12px; color: #666; }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .bonus-card {
+            background: rgba(251,188,4,0.08);
+            border: 1px solid rgba(251,188,4,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .bonus-icon { font-size: 40px; margin-bottom: 15px; }
+        .bonus-title { font-size: 16px; font-weight: 700; color: #FBBC04; margin-bottom: 8px; }
+        .bonus-free { font-size: 14px; font-weight: 800; color: #34A853; }
+
+        .faq-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            padding: 0 25px 20px;
+            font-size: 14px;
+            color: #888;
+            line-height: 1.8;
+            display: none;
+        }
+
+        .faq-item.open .faq-answer { display: block; }
+
+        footer {
+            background: rgba(255,255,255,0.02);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10,10,10,0.95);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            z-index: 999;
+        }
+
+        .sticky-btn {
+            background: linear-gradient(135deg, #00c851, #007E33);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .pricing-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="top-banner">
+    🔥 SONDERANGEBOT — Spare jetzt 50%! Nur für kurze Zeit!
+</div>
+
+<!-- NAV -->
+<nav>
+    <div class="logo">🛒 MerchantFIX Pro</div>
+    <a href="#pricing" class="nav-cta">Jetzt kaufen →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="badge">⚡ Die #1 Lösung für Google Merchant Fehler</div>
+    <h1>
+        Dein Google Merchant<br>
+        zeigt <span class="highlight">rote Fehler?</span><br>
+        Ich behebe <span class="highlight-green">ALLES!</span>
+    </h1>
+    <p class="hero-sub">
+        Die komplette Schritt-für-Schritt Anleitung für Shopify-Anfänger —
+        Alle Fehler beheben, Integration einrichten, Google Shopping starten.
+    </p>
+
+    <div class="hero-stats">
+        <div>
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Zufriedene Kunden</div>
+        </div>
+        <div>
+            <div class="stat-number">20+</div>
+            <div class="stat-label">Fehler gelöst</div>
+        </div>
+        <div>
+            <div class="stat-number">4.9★</div>
+            <div class="stat-label">Bewertung</div>
+        </div>
+        <div>
+            <div class="stat-number">2h</div>
+            <div class="stat-label">Bis zum Ergebnis</div>
+        </div>
+    </div>
+
+    <a href="#pricing" class="cta-primary">
+        🚀 Jetzt Zugang sichern — Nur 47€
+    </a>
+    <p class="cta-sub">✅ Sofortiger Download · 🔒 Sicher bezahlen · 💰 30 Tage Garantie</p>
+</section>
+
+<!-- PROBLEME -->
+<div style="padding: 80px 20px; background: rgba(234,67,53,0.03);">
+<div class="section" style="padding: 0;">
+    <h2 class="section-title">Kennst du das? 😤</h2>
+    <p class="section-sub">Diese Fehler kosten dich täglich Geld...</p>
+
+    <div class="problem-grid">
+        <div class="problem-card">
+            <span class="problem-icon">🚫</span>
+            <div class="problem-text">
+                <h3>Produkte abgelehnt</h3>
+                <p>Google lehnt deine Produkte ab ohne klare Erklärung.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <span class="problem-icon">🔴</span>
+            <div class="problem-text">
+                <h3>Konto gesperrt</h3>
+                <p>Dein Merchant-Konto wurde plötzlich suspendiert.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <span class="problem-icon">😵</span>
+            <div class="problem-text">
+                <h3>Shopify verbinden</h3>
+                <p>Die Integration mit Shopify funktioniert nicht richtig.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <span class="problem-icon">💸</span>
+            <div class="problem-text">
+                <h3>Kein Google Shopping</h3>
+                <p>Deine Produkte erscheinen nicht in Google Shopping.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <span class="problem-icon">😰</span>
+            <div class="problem-text">
+                <h3>Preisabweichungen</h3>
+                <p>Google meldet Preisunterschiede zwischen Shop und Feed.</p>
+            </div>
+        </div>
+        <div class="problem-card">
+            <span class="problem-icon">🤯</span>
+            <div class="problem-text">
+                <h3>Fehlende GTINs</h3>
+                <p>Barcode & GTIN Fehler blockieren deine Produkte.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- LÖSUNG -->
+<div class="solution-bg">
+    <div style="max-width:1000px; margin: 0 auto;">
+    <h2 class="section-title">✅ Die Lösung für ALLES</h2>
+    <p class="section-sub">Ein Kurs — Alle Probleme gelöst</p>
+
+    <div class="solution-grid">
+        <div class="solution-card">
+            <div class="icon">🔧</div>
+            <h3>Sofort-Lösungen</h3>
+            <p>Für jeden Fehler gibt es eine klare Schritt-für-Schritt Lösung.</p>
+        </div>
+        <div class="solution-card">
+            <div class="icon">🛍️</div>
+            <h3>Shopify Integration</h3>
+            <p>Vollständige Anleitung zur perfekten Shopify Verbindung.</p>
+        </div>
+        <div class="solution-card">
+            <div class="icon">🎯</div>
+            <h3>Für Anfänger</h3>
+            <p>Keine technischen Vorkenntnisse nötig. Alles erklärt.</p>
+        </div>
+        <div class="solution-card">
+            <div class="icon">⚡</div>
+            <h3>In 2 Stunden fertig</h3>
+            <p>Folge der Anleitung und dein Shop läuft heute noch.</p>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- MODULE -->
+<div style="padding: 80px 20px; background: #0a0a0a;">
+<div style="max-width: 1000px; margin: 0 auto;">
+    <h2 class="section-title">📚 Was du bekommst</h2>
+    <p class="section-sub">6 komplette Module — Alles was du brauchst</p>
+
+    <div class="module-list">
+        <div class="module-item">
+            <div class="module-number">1</div>
+            <div class="module-content">
+                <h3>🏗️ Grundlagen & Konto Setup</h3>
+                <p>Merchant Center Konto erstellen, Website verifizieren, erste Einrichtung ohne Fehler.</p>
+            </div>
+        </div>
+        <div class="module-item">
+            <div class="module-number">2</div>
+            <div class="module-content">
+                <h3>🛍️ Shopify Integration</h3>
+                <p>Google App installieren, Produktfeed synchronisieren, automatische Updates einrichten.</p>
+            </div>
+        </div>
+        <div class="module-item">
+            <div class="module-number">3</div>
+            <div class="module-content">
+                <h3>🔧 20+ Fehler & Sofort-Lösungen</h3>
+                <p>Alle häufigen Fehler mit klaren Lösungen — Produkte abgelehnt, Preisabweichungen, GTINs und mehr.</p>
+            </div>
+        </div>
+        <div class="module-item">
+            <div class="module-number">4</div>
+            <div class="module-content">
+                <h3>🚨 Konto-Suspendierung beheben</h3>
+                <p>Schritt-für-Schritt Reaktivierungsplan + fertige Einspruch-Vorlage für Google.</p>
+            </div>
+        </div>
+        <div class="module-item">
+            <div class="module-number">5</div>
+            <div class="module-content">
+                <h3>⚡ Feed Optimierung</h3>
+                <p>Produkttitel, Beschreibungen, Bilder und Kategorien richtig optimieren.</p>
+            </div>
+        </div>
+        <div class="module-item">
+            <div class="module-number">6</div>
+            <div class="module-content">
+                <h3>💰 Google Shopping Ads starten</h3>
+                <p>Erste Kampagne einrichten, Budget optimieren, erste Verkäufe erzielen.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div style="padding: 80px 20px; background: rgba(66,133,244,0.03);">
+<div style="max-width: 1000px; margin: 0 auto;">
+    <h2 class="section-title">⭐ Das sagen unsere Kunden</h2>
+    <p class="section-sub">Über 500 zufriedene Shop-Besitzer</p>
+
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"Mein Konto war 3 Wochen gesperrt. Nach diesem Guide war es in 2 Tagen wieder aktiv. Absolute Empfehlung!"</p>
+            <span class="author-avatar">M</span>
+            <span class="author-name">Marco S.</span><br>
+            <span class="author-role">Shopify Shop-Besitzer</span>
+        </div>
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"Endlich versteht man wie das alles zusammenhängt. Meine Produkte sind jetzt alle genehmigt!"</p>
+            <span class="author-avatar">S</span>
+            <span class="author-name">Sarah K.</span><br>
+            <span class="author-role">Online Shop Betreiberin</span>
+        </div>
+        <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p class="testimonial-text">"Als kompletter Anfänger hatte ich keine Ahnung. Jetzt läuft mein Google Shopping perfekt!"</p>
+            <span class="author-avatar">T</span>
+            <span class="author-name">Thomas R.</span><br>
+            <span class="author-role">E-Commerce Einsteiger</span>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- BONUS -->
+<div style="padding: 80px 20px; background: #0a0a0a;">
+<div style="max-width: 1000px; margin: 0 auto;">
+    <h2 class="section-title">🎁 BONUS Materialien</h2>
+    <p class="section-sub">Kostenlos dazu — Wert: über 150€</p>
+
+    <div class="bonus-grid">
+        <div class="bonus-card">
+            <div class="bonus-icon">📋</div>
+            <div class="bonus-title">Master Checkliste</div>
+            <div class="bonus-free">GRATIS dazu!</div>
+        </div>
+        <div class="bonus-card">
+            <div class="bonus-icon">📧</div>
+            <div class="bonus-title">Support E-Mail Vorlagen</div>
+            <div class="bonus-free">GRATIS dazu!</div>
+        </div>
+        <div class="bonus-card">
+            <div class="bonus-icon">📝</div>
+            <div class="bonus-title">20 Produkttitel Vorlagen</div>
+            <div class="bonus-free">GRATIS dazu!</div>
+        </div>
+        <div class="bonus-card">
+            <div class="bonus-icon">🎬</div>
+            <div class="bonus-title">Video Tutorials</div>
+            <div class="bonus-free">GRATIS dazu!</div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="padding: 80px 20px; background: rgba(66,133,244,0.03);">
+    <h2 class="section-title">💰 Wähle dein Paket</h2>
+    <p class="section-sub">Einmalige Zahlung — Lebenslanger Zugriff</p>
+
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="pricing-name">STARTER</div>
+            <div class="pricing-price">27€</div>
+            <ul class="pricing-features">
+                <li><span class="check">✓</span> Module 1-3</li>
+                <li><span class="check">✓</span> Master Checkliste</li>
+                <li><span class="check">✓</span> PDF Download</li>
+                <li style="color:#444">✗ Video Tutorials</li>
+                <li style="color:#444">✗ Support Zugang</li>
+            </ul>
+            <a href="DEIN-DIGISTORE-LINK" class="btn-pricing btn-default">
+                Starter wählen
+            </a>
+        </div>
+
+        <div class="pricing-card featured">
+            <div class="popular-badge">⭐ BELIEBTESTE WAHL</div>
+            <div class="pricing-name">PROFESSIONAL</div>
+            <div class="pricing-price">47€</div>
+            <ul class="pricing-features">
+                <li><span class="check">✓</span> Alle 6 Module</li>
+                <li><span class="check">✓</span> Master Checkliste</li>
+                <li><span class="check">✓</span> Video Tutorials</li>
+                <li><span class="check">✓</span> E-Mail Vorlagen</li>
+                <li><span class="check">✓</span> 20 Titel Vorlagen</li>
+            </ul>
+            <a href="DEIN-DIGISTORE-LINK" class="btn-pricing btn-featured">
+                🚀 Jetzt starten!
+            </a>
+        </div>
+
+        <div class="pricing-card">
+            <div class="pricing-name">VIP</div>
+            <div class="pricing-price">97€</div>
+            <ul class="pricing-features">
+                <li><span class="check">✓</span> Alles aus Professional</li>
+                <li><span class="check">✓</span> 30 Tage Support</li>
+                <li><span class="check">✓</span> Persönliches Feedback</li>
+                <li><span class="check">✓</span> Lebenslange Updates</li>
+                <li><span class="check">✓</span> Priority Support</li>
+            </ul>
+            
