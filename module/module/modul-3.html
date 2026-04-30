@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modul 3 – 20+ Fehler & Sofort-Lösungen | MerchantFIX Pro</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      background: #f0f4f8;
+      line-height: 1.7;
+    }
+    .page-wrapper {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 50px 60px;
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    }
+    .top-nav {
+      background: #1a73e8;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-nav .logo { color: white; font-weight: 900; font-size: 14pt; text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 10pt; font-weight: 600; }
+    .nav-links a.active { color: white; border-bottom: 2px solid white; }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid #1a73e8;
+      padding-bottom: 16px;
+      margin-bottom: 40px;
+    }
+    .header-logo { font-size: 18pt; font-weight: 900; color: #1a73e8; }
+    .header-info { text-align: right; font-size: 9pt; color: #888; }
+    .progress-bar-wrapper {
+      background: #e8f0fe;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 35px;
+      border: 1px solid #c5d8ff;
+    }
+    .progress-label { font-size: 9pt; color: #555; margin-bottom: 8px; font-weight: 600; }
+    .progress-track { background: #d0deff; border-radius: 10px; height: 12px; }
+    .progress-fill {
+      background: linear-gradient(90deg, #1a73e8, #4285f4);
+      height: 12px;
+      border-radius: 10px;
+      width: 50%;
+    }
+    .progress-steps { display: flex; justify-content: space-between; margin-top: 8px; }
+    .progress-steps span { font-size: 8pt; color: #888; }
+    .progress-steps span.done { color: #1a73e8; font-weight: 700; }
+    .title-page {
+      text-align: center;
+      padding: 50px 30px 60px;
+      background: linear-gradient(135deg, #fff5f5, #ffe8e8);
+      border-radius: 16px;
+      border: 2px solid #e53e3e;
+      margin-bottom: 50px;
+    }
+    .kurs-badge {
+      display: inline-block;
+      background: #e53e3e;
+      color: white;
+      padding: 7px 22px;
+      border-radius: 25px;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .modul-label { font-size: 13pt; color: #e53e3e; font-weight: 700; margin-bottom: 10px; }
+    .title-page h1 {
+      font-size: 30pt;
+      font-weight: 900;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      border: none;
+      padding: 0;
+    }
+    .title-divider {
+      width: 80px; height: 4px;
+      background: #e53e3e;
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    .title-subtitle { font-size: 13pt; color: #555; margin-bottom: 20px; }
+    .title-desc { font-size: 11pt; color: #666; max-width: 580px; margin: 0 auto 25px; }
+    .title-meta { font-size: 9pt; color: #999; }
+    .toc {
+      background: #f8f9ff;
+      border-left: 6px solid #1a73e8;
+      border-radius: 10px;
+      padding: 28px 35px;
+      margin-bottom: 50px;
+    }
+    .toc h2 { font-size: 14pt; color: #1a73e8; margin-bottom: 18px; font-weight: 800; border: none; }
+    .toc-list { list-style: none; }
+    .toc-list > li {
+      font-size: 11pt;
+      margin-bottom: 10px;
+      padding: 10px 16px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e0e8ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toc-list > li a { color: #1a73e8; text-decoration: none; font-weight: 600; }
+    h1 {
+      font-size: 24pt;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-top: 50px;
+      margin-bottom: 16px;
+      border-bottom: 3px solid #1a73e8;
+      padding-bottom: 10px;
+    }
+    h2 { font-size: 16pt; font-weight: 800; color: #1a73e8; margin-top: 35px; margin-bottom: 14px; }
+    h3 { font-size: 13pt; font-weight: 700; color: #333; margin-top: 22px; margin-bottom: 10px; }
+    p { font-size: 11pt; margin-bottom: 14px; color: #333; }
+    ul { margin-left: 22px; margin-bottom: 16px; }
+    ul li { font-size: 11pt; margin-bottom: 7px; color: #333; }
+    ol { margin-left: 22px; margin-bottom: 16px; }
+    ol li { font-size: 11pt; margin-bottom: 9px; color: #333; }
+    code {
+      background: #f0f4ff;
+      color: #1a73e8;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 10pt;
+    }
+    .info-box {
+      background: #e8f4fd;
+      border-left: 5px solid #1a73e8;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .info-box strong { color: #1a73e8; }
+    .tipp-box {
+      background: #f0fff4;
+      border-left: 5px solid #38a169;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .tipp-box strong { color: #38a169; }
+    .warn-box {
+      background: #fffbeb;
+      border-left: 5px solid #d69e2e;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warn-box strong { color: #d69e2e; }
+    .error-box {
+      background: #fff5f5;
+      border-left: 5px solid #e53e3e;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .error-box strong { color: #e53e3e; }
+
+    /* FEHLER KARTEN */
+    .fehler-card {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .fehler-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .fehler-nummer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e53e3e;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 12pt;
+      flex-shrink: 0;
+    }
+    .fehler-title { font-size: 13pt; font-weight: 700; color: #1a1a1a; }
+    .fehler-badge {
+      margin-left: auto;
+      background: #fff5f5;
+      color: #e53e3e;
+      border: 1px solid #fed7d7;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 9pt;
+      font-weight: 700;
+    }
+    .fehler-section { margin-bottom: 14px; }
+    .fehler-section-title {
+      font-size: 10pt;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .loesung-steps {
+      background: #f0fff4;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 8px;
+    }
+    .loesung-steps ol {
+      margin: 0;
+      padding-left: 20px;
+    }
+    .loesung-steps ol li {
+      font-size: 11pt;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 10pt; }
+    table th { background: #1a73e8; color: white; padding: 11px 15px; text-align: left; font-weight: 700; }
+    table td { padding: 10px 15px; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+    table tr:nth-child(even) td { background: #f8f9ff; }
+
+    .checkliste {
+      background: #f0fff4;
+      border: 2px solid #38a169;
+      border-radius: 12px;
+      padding: 28px 35px;
+      margin: 40px 0;
+    }
+    .checkliste h2 { color: #38a169; font-size: 16pt; margin-bottom: 22px; border: none; }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid #c6f6d5;
+      border-radius: 8px;
+    }
+    .check-box {
+      width: 22px; height: 22px;
+      border: 2px solid #38a169;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+    .check-text { font-size: 11pt; color: #333; }
+    .check-text strong { color: #1a1a1a; }
+    .check-text small { display: block; color: #888; font-size: 9pt; margin-top: 3px; }
+
+    .modul-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 60px;
+      padding-top: 25px;
+      border-top: 2px solid #e0e0e0;
+    }
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a73e8;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 11pt;
+    }
+    .btn-nav.secondary {
+      background: white;
+      color: #1a73e8;
+      border: 2px solid #1a73e8;
+    }
+    .footer {
+      border-top: 2px solid #1a73e8;
+      padding-top: 14px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9pt;
+      color: #888;
+    }
+    .footer a { color: #1a73e8; text-decoration: none; }
+    @media (max-width: 700px) {
+      .page-wrapper { padding: 25px 20px; margin: 10px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <a href="../index.html" class="logo">🏎️ MerchantFIX Pro</a>
+  <div class="nav-links">
+    <a href="modul-1.html">Modul 1</a>
+    <a href="modul-2.html">Modul 2</a>
+    <a href="modul-3.html" class="active">Modul 3</a>
+    <a href="modul-4.html">Modul 4</a>
+    <a href="modul-5.html">Modul 5</a>
+    <a href="modul-6.html">Modul 6</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">🏎️ KartracingJamie24</div>
+    <div class="header-info">
+      Google Merchant &amp; Shopify Meisterkurs<br>
+      Modul 3 | Version 1.0 | April 2026
+    </div>
+  </div>
+
+  <!-- FORTSCHRITT -->
+  <div class="progress-bar-wrapper">
+    <div class="progress-label">📊 Kurs-Fortschritt: Modul 3 von 6</div>
+    <div class="progress-track">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="progress-steps">
+      <span class="done">1 ✓</span>
+      <span class="done">2 ✓</span>
+      <span class="done">3 ✓</span>
+      <span>4</span>
+      <span>5</span>
+      <span>6</span>
+    </div>
+  </div>
+
+  <!-- TITELSEITE -->
+  <div class="title-page">
+    <div class="kurs-badge">🔧 Google Merchant &amp; Shopify Meisterkurs</div>
+    <div class="modul-label">Modul 3 von 6</div>
+    <h1>20+ Fehler &amp; Sofort-Lösungen</h1>
+    <div class="title-divider"></div>
+    <div class="title-subtitle">Alle häufigen Google Merchant Fehler beheben</div>
+    <p class="title-desc">
+      In diesem Modul bekommst du für jeden häufigen Google Merchant Fehler
+      eine klare, sofort umsetzbare Schritt-für-Schritt Lösung.
+    </p>
+    <div class="title-meta">🏎️ KartracingJamie24 | Version 1.0 | April 2026 | support@merchant-fix-pro.de</div>
+  </div>
+
+  <!-- INHALTSVERZEICHNIS -->
+  <div class="toc">
+    <h2>📋 Inhaltsverzeichnis</h2>
+    <ul class="toc-list">
+      <li>🔴 <a href="#produkte-abgelehnt">Fehler 1-5: Produkte abgelehnt</a></li>
+      <li>💰 <a href="#preisabweichungen">Fehler 6-10: Preisabweichungen</a></li>
+      <li>📦 <a href="#gtin-fehler">Fehler 11-14: GTIN & Barcode Fehler</a></li>
+      <li>🖼️ <a href="#bild-fehler">Fehler 15-17: Bild-Fehler</a></li>
+      <li>🌐 <a href="#website-fehler">Fehler 18-20: Website & Domain Fehler</a></li>
+      <li>✅ <a href="#checkliste">Checkliste Modul 3</a></li>
+    </ul>
+  </div>
+
+  <!-- INTRO -->
+  <div class="info-box">
+    <strong>ℹ️ So nutzt du dieses Modul:</strong><br><br>
+    Suche deinen Fehler in der Liste → Folge der Schritt-für-Schritt Lösung →
+    Prüfe danach mit der Checkliste ob alles korrekt ist.
+    Die meisten Fehler sind in unter 15 Minuten behoben!
+  </div>
+
+  <!-- ===== FEHLER 1-5: PRODUKTE ABGELEHNT ===== -->
+  <h1 id="produkte-abgelehnt">🔴 Fehler 1–5: Produkte abgelehnt</h1>
+
+  <!-- FEHLER 1 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">1</div>
+      <div class="fehler-title">Produkttitel zu kurz oder nicht aussagekräftig</div>
+      <span class="fehler-badge">⚡ Häufig</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Dein Produkttitel ist zu allgemein, zu kurz oder enthält keine relevanten Keywords.
+      Google benötigt beschreibende Titel für die Einordnung deiner Produkte.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Gehe in Shopify zu <strong>Produkte</strong></li>
+          <li>Öffne das abgelehnte Produkt</li>
+          <li>Ändere den Titel nach diesem Schema:<br>
+          <code>[Marke] + [Produkttyp] + [Farbe] + [Größe/Material]</code></li>
+          <li>Beispiel: <code>Nike Air Max 270 Herren Laufschuhe Schwarz Größe 42</code></li>
+          <li>Speichere und warte 24h auf Überprüfung</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tipp-box">
+      <strong>💡 Tipp:</strong> Nutze 70-150 Zeichen für den Titel.
+      Wichtigste Keywords immer am Anfang!
+    </div>
+  </div>
+
+  <!-- FEHLER 2 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">2</div>
+      <div class="fehler-title">Produktbeschreibung fehlt oder zu kurz</div>
+      <span class="fehler-badge">⚡ Häufig</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Die Produktbeschreibung ist leer, zu kurz oder enthält irrelevante Informationen.
+      Google möchte detaillierte Beschreibungen für eine korrekte Einordnung.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Öffne das Produkt in Shopify</li>
+          <li>Schreibe eine Beschreibung mit <strong>mindestens 500 Zeichen</strong></li>
+          <li>Beschreibe: Material, Maße, Verwendungszweck, Besonderheiten</li>
+          <li>Vermeide: Werbetexte, Großbuchstaben, übermäßige Ausrufezeichen</li>
+          <li>Speichere und synchronisiere den Feed neu</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEHLER 3 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">3</div>
+      <div class="fehler-title">Falsche oder fehlende Produktkategorie</div>
+      <span class="fehler-badge">⚡ Häufig</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Das Produkt ist keiner oder einer falschen Google Produktkategorie zugeordnet.
+      Dies führt zu Ablehnungen oder schlechter Sichtbarkeit.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Gehe im Merchant Center zu <strong>Produkte → Alle Produkte</strong></li>
+          <li>Öffne das abgelehnte Produkt</li>
+          <li>Klicke auf <strong>„Produktkategorie"</strong></li>
+          <li>Suche die passende Google Kategorie:<br>
+          <code>google.com/basepages/producttype/taxonomy-with-ids.de-DE.txt</code></li>
+          <li>Wähle die spezifischste passende Kategorie</li>
+          <li>Speichere die Änderung</li>
+        </ol>
+      </div>
+    </div>
+    <div class="tipp-box">
+      <strong>💡 Tipp:</strong> Je spezifischer die Kategorie, desto besser die Sichtbarkeit!
+      Statt „Kleidung" lieber „Herren &gt; Schuhe &gt; Sportschuhe" wählen.
+    </div>
+  </div>
+
+  <!-- FEHLER 4 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">4</div>
+      <div class="fehler-title">Produkt verstößt gegen Google-Richtlinien</div>
+      <span class="fehler-badge">🔴 Kritisch</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Das Produkt fällt unter eine verbotene oder eingeschränkte Kategorie
+      laut Google Shopping Richtlinien.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Prüfe Googles verbotene Produkte:<br>
+          <code>support.google.com/merchants/answer/6149970</code></li>
+          <li>Verbotene Kategorien: Waffen, gefälschte Waren, Tabak, verschreibungspflichtige Medikamente</li>
+          <li>Eingeschränkte Kategorien: Alkohol, Glücksspiel, Erwachseneninhalte</li>
+          <li>Entferne verbotene Produkte aus deinem Feed</li>
+          <li>Bei eingeschränkten: Beantrage spezielle Genehmigung bei Google</li>
+        </ol>
+      </div>
+    </div>
+    <div class="error-box">
+      <strong>🚨 Achtung:</strong> Wiederholte Verstöße führen zur dauerhaften Kontosperrung!
+      Prüfe alle Produkte vor dem Upload gegen die Richtlinien.
+    </div>
+  </div>
+
+  <!-- FEHLER 5 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">5</div>
+      <div class="fehler-title">Verfügbarkeit falsch angegeben</div>
+      <span class="fehler-badge">⚡ Häufig</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Die Verfügbarkeit im Feed stimmt nicht mit der tatsächlichen Verfügbarkeit
+      auf der Produktseite überein.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Prüfe in Shopify den Lagerbestand des Produkts</li>
+          <li>Stelle sicher dass die Shopify-Einstellung korrekt ist:<br>
+          <code>„Verkauf fortsetzen, wenn nicht vorrätig"</code></li>
+          <li>Im Feed müssen diese Werte stimmen:
+            <ul>
+              <li><code>in_stock</code> = Produkt vorrätig</li>
+              <li><code>out_of_stock</code> = nicht vorrätig</li>
+              <li><code>preorder</code> = Vorbestellung möglich</li>
+            </ul>
+          </li>
+          <li>Synchronisiere den Feed neu</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FEHLER 6-10: PREISABWEICHUNGEN ===== -->
+  <h1 id="preisabweichungen">💰 Fehler 6–10: Preisabweichungen</h1>
+
+  <!-- FEHLER 6 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">6</div>
+      <div class="fehler-title">Preis im Feed stimmt nicht mit Shop überein</div>
+      <span class="fehler-badge">🔴 Kritisch</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Google crawlt deine Website und vergleicht den Preis mit dem Feed.
+      Wenn diese nicht übereinstimmen, werden Produkte abgelehnt.</p>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">✅ Die Lösung</div>
+      <div class="loesung-steps">
+        <ol>
+          <li>Gehe in Shopify zu <strong>Produkte</strong></li>
+          <li>Prüfe den aktuellen Preis des Produkts</li>
+          <li>Gehe im Merchant Center zu <strong>Produkte</strong></li>
+          <li>Vergleiche den Preis im Feed mit dem Shop-Preis</li>
+          <li>Passe den Preis in Shopify an oder aktualisiere den Feed manuell</li>
+          <li>Warte 24-48h auf erneute Überprüfung</li>
+        </ol>
+      </div>
+    </div>
+    <div class="warn-box">
+      <strong>⚠️ Wichtig:</strong> Preisänderungen im Shop werden nicht sofort im Feed übernommen.
+      Synchronisiere nach jeder Preisänderung den Feed manuell!
+    </div>
+  </div>
+
+  <!-- FEHLER 7 -->
+  <div class="fehler-card">
+    <div class="fehler-header">
+      <div class="fehler-nummer">7</div>
+      <div class="fehler-title">Währung falsch eingestellt</div>
+      <span class="fehler-badge">⚡ Häufig</span>
+    </div>
+    <div class="fehler-section">
+      <div class="fehler-section-title">❌ Das Problem</div>
+      <p>Der Feed sen
