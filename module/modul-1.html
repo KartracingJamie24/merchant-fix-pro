@@ -1,1 +1,686 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modul 1 – Grundlagen & Setup | MerchantFIX Pro</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      background: #f0f4f8;
+      line-height: 1.7;
+    }
+
+    .page-wrapper {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 50px 60px;
+      border-radius: 16px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+    }
+
+    /* NAV */
+    .top-nav {
+      background: #1a73e8;
+      padding: 12px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-nav .logo {
+      color: white;
+      font-weight: 900;
+      font-size: 14pt;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 20px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 10pt;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-links a.active { color: white; border-bottom: 2px solid white; }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid #1a73e8;
+      padding-bottom: 16px;
+      margin-bottom: 40px;
+    }
+    .header-logo {
+      font-size: 18pt;
+      font-weight: 900;
+      color: #1a73e8;
+    }
+    .header-info {
+      text-align: right;
+      font-size: 9pt;
+      color: #888;
+      line-height: 1.5;
+    }
+
+    /* FORTSCHRITTSBALKEN */
+    .progress-bar-wrapper {
+      background: #e8f0fe;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 35px;
+      border: 1px solid #c5d8ff;
+    }
+    .progress-label {
+      font-size: 9pt;
+      color: #555;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .progress-track {
+      background: #d0deff;
+      border-radius: 10px;
+      height: 12px;
+      width: 100%;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #1a73e8, #4285f4);
+      height: 12px;
+      border-radius: 10px;
+      width: 16.6%;
+      transition: width 0.5s ease;
+    }
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .progress-steps span {
+      font-size: 8pt;
+      color: #888;
+    }
+    .progress-steps span.done { color: #1a73e8; font-weight: 700; }
+
+    /* TITELSEITE */
+    .title-page {
+      text-align: center;
+      padding: 50px 30px 60px;
+      background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+      border-radius: 16px;
+      border: 2px solid #1a73e8;
+      margin-bottom: 50px;
+    }
+    .kurs-badge {
+      display: inline-block;
+      background: #1a73e8;
+      color: white;
+      padding: 7px 22px;
+      border-radius: 25px;
+      font-size: 9pt;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .modul-label {
+      font-size: 13pt;
+      color: #1a73e8;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .title-page h1 {
+      font-size: 30pt;
+      font-weight: 900;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      border: none;
+      padding: 0;
+    }
+    .title-divider {
+      width: 80px; height: 4px;
+      background: #1a73e8;
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    .title-subtitle {
+      font-size: 13pt;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .title-desc {
+      font-size: 11pt;
+      color: #666;
+      max-width: 580px;
+      margin: 0 auto 25px;
+    }
+    .title-meta { font-size: 9pt; color: #999; }
+
+    /* INHALTSVERZEICHNIS */
+    .toc {
+      background: #f8f9ff;
+      border-left: 6px solid #1a73e8;
+      border-radius: 10px;
+      padding: 28px 35px;
+      margin-bottom: 50px;
+    }
+    .toc h2 {
+      font-size: 14pt;
+      color: #1a73e8;
+      margin-bottom: 18px;
+      font-weight: 800;
+      border: none;
+    }
+    .toc-list { list-style: none; }
+    .toc-list > li {
+      font-size: 11pt;
+      color: #333;
+      margin-bottom: 10px;
+      padding: 10px 16px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e0e8ff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .toc-list > li a {
+      color: #1a73e8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .toc-icon {
+      font-size: 14pt;
+      flex-shrink: 0;
+    }
+
+    /* ÜBERSCHRIFTEN */
+    h1 {
+      font-size: 24pt;
+      font-weight: 900;
+      color: #1a1a1a;
+      margin-top: 50px;
+      margin-bottom: 16px;
+      border-bottom: 3px solid #1a73e8;
+      padding-bottom: 10px;
+    }
+    h2 {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #1a73e8;
+      margin-top: 35px;
+      margin-bottom: 14px;
+    }
+    h3 {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #333;
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+
+    /* TEXT */
+    p { font-size: 11pt; margin-bottom: 14px; color: #333; }
+    ul { margin-left: 22px; margin-bottom: 16px; }
+    ul li { font-size: 11pt; margin-bottom: 7px; color: #333; }
+    ol { margin-left: 22px; margin-bottom: 16px; }
+    ol li { font-size: 11pt; margin-bottom: 9px; color: #333; }
+    code {
+      background: #f0f4ff;
+      color: #1a73e8;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 10pt;
+    }
+
+    /* BOXEN */
+    .info-box {
+      background: #e8f4fd;
+      border-left: 5px solid #1a73e8;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .info-box strong { color: #1a73e8; }
+
+    .tipp-box {
+      background: #f0fff4;
+      border-left: 5px solid #38a169;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .tipp-box strong { color: #38a169; }
+
+    .warn-box {
+      background: #fffbeb;
+      border-left: 5px solid #d69e2e;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .warn-box strong { color: #d69e2e; }
+
+    .error-box {
+      background: #fff5f5;
+      border-left: 5px solid #e53e3e;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .error-box strong { color: #e53e3e; }
+
+    /* TABELLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 10pt;
+    }
+    table th {
+      background: #1a73e8;
+      color: white;
+      padding: 11px 15px;
+      text-align: left;
+      font-weight: 700;
+    }
+    table td {
+      padding: 10px 15px;
+      border-bottom: 1px solid #e8e8e8;
+      vertical-align: top;
+    }
+    table tr:nth-child(even) td { background: #f8f9ff; }
+    table tr:hover td { background: #e8f0fe; }
+
+    /* SCHRITT-KARTEN */
+    .schritt-card {
+      background: #f8f9ff;
+      border: 1px solid #dde4ff;
+      border-radius: 12px;
+      padding: 22px 26px;
+      margin-bottom: 18px;
+    }
+    .schritt-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 14px;
+    }
+    .schritt-nummer {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a73e8;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-weight: 900;
+      font-size: 13pt;
+      flex-shrink: 0;
+    }
+    .schritt-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    /* CHECKLISTE */
+    .checkliste {
+      background: #f0fff4;
+      border: 2px solid #38a169;
+      border-radius: 12px;
+      padding: 28px 35px;
+      margin: 40px 0;
+    }
+    .checkliste h2 {
+      color: #38a169;
+      font-size: 16pt;
+      margin-bottom: 22px;
+      border: none;
+    }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid #c6f6d5;
+      border-radius: 8px;
+    }
+    .check-box {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #38a169;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .check-text { font-size: 11pt; color: #333; }
+    .check-text strong { color: #1a1a1a; }
+    .check-text small {
+      display: block;
+      color: #888;
+      font-size: 9pt;
+      margin-top: 3px;
+    }
+
+    /* MODULE NAVIGATION */
+    .modul-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 60px;
+      padding-top: 25px;
+      border-top: 2px solid #e0e0e0;
+      gap: 15px;
+    }
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1a73e8;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 11pt;
+      transition: background 0.2s;
+    }
+    .btn-nav:hover { background: #1557b0; }
+    .btn-nav.secondary {
+      background: white;
+      color: #1a73e8;
+      border: 2px solid #1a73e8;
+    }
+    .btn-nav.secondary:hover { background: #f0f4ff; }
+
+    /* FOOTER */
+    .footer {
+      border-top: 2px solid #1a73e8;
+      padding-top: 14px;
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9pt;
+      color: #888;
+    }
+    .footer a { color: #1a73e8; text-decoration: none; }
+
+    /* PRINT */
+    @media print {
+      body { background: white; }
+      .top-nav, .modul-nav { display: none; }
+      .page-wrapper { box-shadow: none; padding: 20px; }
+      .schritt-card { page-break-inside: avoid; }
+      .check-item { page-break-inside: avoid; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 700px) {
+      .page-wrapper { padding: 25px 20px; margin: 10px; }
+      .title-page h1 { font-size: 22pt; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAV -->
+  <nav class="top-nav">
+    <a href="../index.html" class="logo">🏎️ MerchantFIX Pro</a>
+    <div class="nav-links">
+      <a href="modul-1.html" class="active">Modul 1</a>
+      <a href="modul-2.html">Modul 2</a>
+      <a href="modul-3.html">Modul 3</a>
+      <a href="modul-4.html">Modul 4</a>
+      <a href="modul-5.html">Modul 5</a>
+      <a href="modul-6.html">Modul 6</a>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-logo">🏎️ KartracingJamie24</div>
+      <div class="header-info">
+        Google Merchant &amp; Shopify Meisterkurs<br>
+        Modul 1 | Version 1.0 | April 2026
+      </div>
+    </div>
+
+    <!-- FORTSCHRITT -->
+    <div class="progress-bar-wrapper">
+      <div class="progress-label">📊 Kurs-Fortschritt: Modul 1 von 6</div>
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="progress-steps">
+        <span class="done">1 ✓</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+      </div>
+    </div>
+
+    <!-- TITELSEITE -->
+    <div class="title-page">
+      <div class="kurs-badge">📘 Google Merchant &amp; Shopify Meisterkurs</div>
+      <div class="modul-label">Modul 1 von 6</div>
+      <h1>Grundlagen &amp; Setup</h1>
+      <div class="title-divider"></div>
+      <div class="title-subtitle">Google Merchant Konto erstellen &amp; Shopify verbinden</div>
+      <p class="title-desc">
+        In diesem Modul lernst du Schritt für Schritt, wie du dein Google Merchant Center Konto
+        einrichtest und erfolgreich mit deinem Shopify-Shop verbindest – auch als kompletter Anfänger!
+      </p>
+      <div class="title-meta">🏎️ KartracingJamie24 | Version 1.0 | April 2026 | support@merchant-fix-pro.de</div>
+    </div>
+
+    <!-- INHALTSVERZEICHNIS -->
+    <div class="toc">
+      <h2>📋 Inhaltsverzeichnis</h2>
+      <ul class="toc-list">
+        <li><span class="toc-icon">🎯</span><a href="#ziel">1. Zielsetzung dieses Moduls</a></li>
+        <li><span class="toc-icon">📦</span><a href="#voraussetzungen">2. Voraussetzungen</a></li>
+        <li><span class="toc-icon">🔧</span><a href="#anleitung">3. Schritt-für-Schritt-Anleitung</a></li>
+        <li><span class="toc-icon">🚨</span><a href="#fehler">4. Häufige Fehler &amp; Sofort-Lösungen</a></li>
+        <li><span class="toc-icon">✅</span><a href="#checkliste">5. Checkliste Modul 1</a></li>
+      </ul>
+    </div>
+
+    <!-- ===== 1. ZIELSETZUNG ===== -->
+    <h1 id="ziel">🎯 1. Zielsetzung</h1>
+    <p>
+      Herzlich willkommen zu <strong>Modul 1</strong> des Google Merchant &amp; Shopify Meisterkurses!
+      In diesem ersten Modul legst du das Fundament für deinen Erfolg mit Google Shopping.
+    </p>
+
+    <div class="info-box">
+      <strong>🎯 Dein Ziel nach diesem Modul:</strong><br><br>
+      Du hast ein vollständig eingerichtetes Google Merchant Center Konto, das erfolgreich
+      mit deinem Shopify-Shop verbunden ist und deinen ersten Produktfeed synchronisiert.
+    </div>
+
+    <h3>Nach diesem Modul kannst du:</h3>
+    <ul>
+      <li>✅ Ein Google Merchant Center Konto von Grund auf einrichten</li>
+      <li>✅ Shopify sicher und korrekt mit Google Merchant verbinden</li>
+      <li>✅ Deinen ersten Produktfeed erstellen und synchronisieren</li>
+      <li>✅ Die wichtigsten Google-Richtlinien kennen und einhalten</li>
+      <li>✅ Typische Anfängerfehler von vornherein vermeiden</li>
+    </ul>
+
+    <div class="tipp-box">
+      <strong>💡 Tipp:</strong> Arbeite dieses Modul von Anfang bis Ende durch, bevor du
+      weitermachst. Eine solide Grundlage spart dir später stundenlange Fehlersuche!
+    </div>
+
+    <!-- ===== 2. VORAUSSETZUNGEN ===== -->
+    <h1 id="voraussetzungen">📦 2. Voraussetzungen</h1>
+    <p>Bevor du beginnst, stelle sicher, dass du Folgendes bereit hast:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>✅ Was du brauchst</th>
+          <th>📝 Details</th>
+          <th>⚡ Wichtigkeit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Google-Konto</strong></td>
+          <td>Aktives Gmail- oder Google Workspace-Konto</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>Shopify-Shop</strong></td>
+          <td>Aktiver Shop mit Admin-Rechten</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>Verifizierte Domain</strong></td>
+          <td>Domain muss dir gehören und erreichbar sein</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>SSL-Zertifikat</strong></td>
+          <td>https:// muss aktiv sein (bei Shopify automatisch)</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>Rechtliche Texte</strong></td>
+          <td>Impressum, Datenschutz, Widerrufsbelehrung, AGB</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>Produktbilder</strong></td>
+          <td>Mind. 800×800 px, weißer/klarer Hintergrund</td>
+          <td>🔴 Pflicht</td>
+        </tr>
+        <tr>
+          <td><strong>Mindestens 1 Produkt</strong></td>
+          <td>Zum Testen des Feeds benötigt</td>
+          <td>🟡 Empfohlen</td>
+        </tr>
+        <tr>
+          <td><strong>GTIN-/EAN-Codes</strong></td>
+          <td>Barcodes deiner Produkte (falls vorhanden)</td>
+          <td>🟡 Empfohlen</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠️ Achtung:</strong> Ohne verifizierte Domain und vollständige rechtliche Texte
+      wird Google dein Konto nicht aktivieren oder sogar sperren.
+      Stelle sicher, dass diese Punkte vorab erfüllt sind!
+    </div>
+
+    <!-- ===== 3. SCHRITT FÜR SCHRITT ===== -->
+    <h1 id="anleitung">🔧 3. Schritt-für-Schritt-Anleitung</h1>
+
+    <div class="info-box">
+      <strong>ℹ️ Hinweis:</strong> Führe jeden Schritt der Reihe nach aus.
+      Überspringe keinen Schritt – jeder baut auf dem vorherigen auf!
+    </div>
+
+    <!-- SCHRITT 1 -->
+    <h2>SCHRITT 1: Google Merchant Center Konto erstellen</h2>
+
+    <div class="schritt-card">
+      <div class="schritt-header">
+        <div class="schritt-nummer">1</div>
+        <div class="schritt-title">Merchant Center öffnen</div>
+      </div>
+      <p>Öffne deinen Browser und gehe zu: <code>merchants.google.com</code><br>
+      Klicke auf <strong>„Jetzt starten"</strong> oder <strong>„Konto erstellen"</strong>.</p>
+    </div>
+
+    <div class="schritt-card">
+      <div class="schritt-header">
+        <div class="schritt-nummer">2</div>
+        <div class="schritt-title">Mit Google-Konto anmelden</div>
+      </div>
+      <p>Melde dich mit deinem Google-Konto an.</p>
+      <div class="tipp-box">
+        <strong>💡 Empfehlung:</strong> Nutze dasselbe Konto, das du auch für Google Ads
+        verwenden möchtest. Das vereinfacht die spätere Verknüpfung erheblich.
+      </div>
+    </div>
+
+    <div class="schritt-card">
+      <div class="schritt-header">
+        <div class="schritt-nummer">3</div>
+        <div class="schritt-title">Unternehmensdaten eingeben</div>
+      </div>
+      <p>Fülle alle Felder des Einrichtungsassistenten sorgfältig aus:</p>
+      <ul>
+        <li><strong>Firmenname:</strong> Genau wie im Impressum angegeben</li>
+        <li><strong>Land:</strong> Deutschland (oder dein Verkaufsland)</li>
+        <li><strong>Währung:</strong> Euro (EUR)</li>
+        <li><strong>Zeitzone:</strong> Europa/Berlin</li>
+      </ul>
+      <div class="warn-box">
+        <strong>⚠️ Wichtig:</strong> Der Firmenname lässt sich später nur schwer ändern.
+        Trage ihn genau so ein, wie er in deinem Impressum steht!
+      </div>
+    </div>
+
+    <div class="schritt-card">
+      <div class="schritt-header">
+        <div class="schritt-nummer">4</div>
+        <div class="schritt-title">Website-URL eintragen</div>
+      </div>
+      <p>Trage deine vollständige Shop-URL ein:<br>
+      Beispiel: <code>https://www.deinshop.de</code></p>
+      <div class="warn-box">
+        <strong>⚠️ Achtung:</strong> Verwende immer <code>https://</code> mit SSL-Zertifikat.
+        Shops ohne SSL werden von Google nicht akzeptiert. Bei Shopify ist SSL automatisch aktiv.
+      </div>
+    </div>
+
+    <!-- SCHRITT 2 -->
+    <h2>SCHRITT 2: Domain verifizieren &amp; beanspruchen</h2>
+    <p>Google muss bestätigen, dass du der Inhaber der Website bist. Wähle eine dieser Methoden:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Methode</th>
+          <th>Beschreibung</th>
+          <th>Empfehlung für Shopify</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>🏷️ <strong>HTML-Tag</strong></td>
+          <td>Meta-Tag in den &lt;head&gt; einfügen</td>
+          <td>⭐ Beste Wahl</td>
+        </tr>
+        <tr>
+          <td>📄 HTML-Datei</td>
+          <td>Datei ins Root-Verzeichnis hochladen</td>
+          <td>Nicht direkt möglich</td>
+        </tr>
+        <tr>
+          <td>🌐 DNS-Eintrag</td>
+          <td>TXT-Eint
